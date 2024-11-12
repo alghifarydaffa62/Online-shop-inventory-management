@@ -1,10 +1,11 @@
 import './style/style.css'
+import HomePage from './Component/Homepage'
 
 function App() {
   return (
-    <>
-      <h1>Store Management</h1>
-    </>
+    <div>
+      <HomePage/>
+    </div>
   )
 }
 
