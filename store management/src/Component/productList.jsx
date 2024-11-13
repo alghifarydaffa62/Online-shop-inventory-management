@@ -1,32 +1,42 @@
 import React from "react"
+import ProductItem from "./productItem"
 import '../style/style.css'
 
-class ProductList extends React.Component {
-    render() {
-        return(
+function ProductList({product}) {
+    return(
+        <div className="list-produk">
+            <h1>DATA PRODUK</h1>
             <table>
-                <tr>
-                    <th>id</th>
-                    <th>Nama</th>
-                    <th>Gambar</th>
-                    <th>Sku</th>
-                    <th>Harga</th>
-                    <th>Kuantitas</th>
-                    <th>Marketplace</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Lehnova thinkpad gen 11</td>
-                    <td>IMG</td>
-                    <td>Lehnova</td>
-                    <td>Rp. 10000</td>
-                    <td>10</td>
-                    <td>Lazada</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Nama</th>
+                        <th>Sku</th>
+                        <th>Harga</th>
+                        <th>Kuantitas</th>
+                        <th>Marketplace</th>
+                        <th>Manage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        product.map((produk) => (
+                            <ProductItem
+                                key={produk.id}
+                                id={produk.id}
+                                name={produk.name}
+                                sku={produk.sku}
+                                harga={produk.price}
+                                kuantitas={produk.quantity}
+                                market={produk.marketplace}
+                            />
+                        ))
+                    }
+                </tbody>
             </table>
-        )
+        </div>
         
-    }
+    )
 }
 
 export default ProductList

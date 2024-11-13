@@ -22,6 +22,7 @@ ul {
 li a  {
     text-decoration: none;
     cursor: pointer;
+    color: white;
 }
 
 li a:hover {
@@ -58,11 +59,17 @@ li a:hover {
     border: 1px dashed rgb(219, 219, 219);
     border-radius: 3px;
     margin-block: 0.8rem;
+    color: white;
+}
+
+.list-produk {
+    text-align: center;
+    color: white;
 }
 
 table, th, td {
     color: white;
-    margin: 5rem auto;
+    margin: 2rem auto;
     border: 1px solid white;
     border-collapse: collapse;
 }
@@ -72,4 +79,7 @@ th, td {
     text-align: center;
 }
 
-
+.lazada, .tokopedia, .shopee {
+    color: white;
+    text-align: center;
+}
