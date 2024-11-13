@@ -7,7 +7,7 @@ class NewProduct extends React.Component {
 
         this.state = {
             name: '',
-            img: '',
+            image: '',
             sku: '',
             price: '',
             quantity: '',
