@@ -1,6 +1,7 @@
 import React from 'react'
 import { product } from '../utils/data'
 import NewProduct from './Newproduct'
+import ProductList from './productList'
 import '../style/style.css'
 
 class HomePage extends React.Component {
@@ -27,6 +28,7 @@ class HomePage extends React.Component {
                     </ul>
                 </nav>
                 <NewProduct/>
+                <ProductList/>
             </div>
         )
     }
