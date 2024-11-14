@@ -10,6 +10,7 @@ function ProductList({product}) {
                 <thead>
                     <tr>
                         <th>id</th>
+                        <th>Gambar</th>
                         <th>Nama</th>
                         <th>Sku</th>
                         <th>Harga</th>
@@ -25,6 +26,7 @@ function ProductList({product}) {
                                 key={produk.id}
                                 id={produk.id}
                                 name={produk.name}
+                                image={produk.image}
                                 sku={produk.sku}
                                 harga={produk.price}
                                 kuantitas={produk.quantity}

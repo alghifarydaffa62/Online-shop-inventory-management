@@ -63,6 +63,7 @@ li a:hover {
 }
 
 .list-produk {
+    margin-top: 2rem;
     text-align: center;
     color: white;
 }
@@ -75,11 +76,15 @@ table, th, td {
 }
 
 th, td {
-    padding: 1rem;
+    padding: 0.7rem;
     text-align: center;
 }
 
 .lazada, .tokopedia, .shopee {
     color: white;
     text-align: center;
+}
+img {
+    width: 15vw;
+    height: 20vh;
 }

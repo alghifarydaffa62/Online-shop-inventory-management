@@ -1,9 +1,26 @@
+import product1 from '../image/product1.jpeg'
+import product2 from '../image/product2.png'
+import product3 from '../image/product3..jpeg'
+import product4 from '../image/product4.jpeg'
+import product5 from '../image/product5.jpeg'
+import product6 from '../image/product6.jpeg'
+import product7 from '../image/product7.jpeg'
+import product8 from '../image/product8.jpeg'
+
+const getId = (key) => {
+    let id = localStorage.getItem(key);
+    if (!id) {
+        id = new Date().getTime().toString();
+        localStorage.setItem(key, id);
+    }
+    return id;
+}
 
 const product = () =>  ([
     {
-        id: 1,
+        id: getId("produk1"),
         name: "Casing luffy gear 5 samsung black/grey",
-        // image: new URL('../image/product1.jpeg'),
+        image: product1,
         sku: "Samsung A12",
         createdAt: "10-02-2022",
         price: 20000,
@@ -11,9 +28,9 @@ const product = () =>  ([
         marketplace: "Lazada"
     }, 
     {
-        id: 2,
+        id: getId("produk2"),
         name: "Power bank black 5000mah",
-        // image: new URL('../image/product2.png'),
+        image: product2,
         sku: "Mycyonos",
         createdAt: "20-04-2022",
         price: 80000,
@@ -21,9 +38,9 @@ const product = () =>  ([
         marketplace: "Lazada"
     }, 
     {
-        id: 3,
+        id: getId("produk3"),
         name: "Celana olahraga fitness pria (Panjang/pendek)",
-        // image: new URL('../image/product3.jpeg'),
+        image: product3,
         sku: "Nikees",
         createdAt: "02-11-2022",
         price: 17000,
@@ -31,9 +48,9 @@ const product = () =>  ([
         marketplace: "Shopee"
     }, 
     {
-        id: 4,
+        id: getId("produk4"),
         name: "Lehnova Thinkpad X1 Titanium Gen 10",
-        // image: new URL('../image/product4.jpeg'),
+        image: product4,
         sku: "Lehnova",
         createdAt: "18-08-2023",
         price: 15250000,
@@ -41,9 +58,9 @@ const product = () =>  ([
         marketplace: "Tokopedia"
     }, 
     {
-        id: 5,
+        id: getId("produk5"),
         name: "Kemeja pria polos All color",
-        // image: new URL('../image/product5.jpeg'),
+        image: product5,
         sku: "Polong",
         createdAt: "22-10-2021",
         price: 500000,
@@ -51,9 +68,9 @@ const product = () =>  ([
         marketplace: "Shopee"
     }, 
     {
-        id: 6,
+        id: getId("produk6"),
         name: "Palu thor original dari asgard",
-        // image: new URL('../image/product6.jpeg'),
+        image: product6,
         sku: "Mjolnir",
         createdAt: "25-12-2020",
         price: 100000,
@@ -61,9 +78,9 @@ const product = () =>  ([
         marketplace: "Tokopedia"
     }, 
     {
-        id: 7,
+        id: getId("produk7"),
         name: "Dompet kulit pria anti-gores",
-        // image: new URL('../image/product7.jpeg'),
+        image: product7,
         sku: "Kochi",
         createdAt: "19-11-2023",
         price: 17000,
@@ -71,9 +88,9 @@ const product = () =>  ([
         marketplace: "Shopee"
     }, 
     {
-        id: 8,
+        id: getId("produk8"),
         name: "Lehnova Gamer series ultra F1",
-        // image: new URL('../image/product8.jpeg'),
+        image: product8,
         sku: "Lehnova",
         createdAt: "25-12-2020",
         price: 20000000,
