@@ -63,13 +63,17 @@ class HomePage extends React.Component {
         const selectedproduct = this.state.product.find(item => item.id == id)
 
         if(selectedproduct) {
-            this.setState({viewProduct: selectedproduct})
+            this.setState({viewProduct: selectedproduct}, () => {
+                document.body.classList.add("no-scroll")
+            })
         }
     }
 
     closePopUp = (event) => {
         event.preventDefault()
-        this.setState({viewProduct: null})
+        this.setState({viewProduct: null}, () => {
+            document.body.classList.remove("no-scroll")
+        })
     }
 
     ViewPopUp() {
@@ -77,27 +81,35 @@ class HomePage extends React.Component {
         if (!viewProduct) return null
     
         return (
-            <form className="view-popup">
-                <label for="name">Nama produk:</label><br/>
-                <input type='text' value={viewProduct.name} readOnly/><br/>
-                
-                <label for="img">Gambar produk:</label><br/>        
-                <img src={viewProduct.image} alt='produk'/><br/>
-                
-                <label for="sku">Sku produk:</label><br/>        
-                <input type='text' value={viewProduct.sku} readOnly/><br/>
-        
-                <label for="harga">Harga produk:</label><br/>
-                <input type='text' value={viewProduct.price} readOnly/><br/>
-                        
-                <label for="quantity">Kuantitas produk:</label><br/>
-                <input type='text' value={viewProduct.quantity} readOnly/><br/>
-                        
-                <label for="marketplace">Marketplace produk:</label><br/>
-                <input type='text' value={viewProduct.marketplace} readOnly/><br/>
+            <div className='overlay'>
+                <form className="view-popup"> 
+                    <h2>Tentang Produk</h2>
+                    <div className="popup-input">
+                        <div>
+                            <label for="name">Nama produk:</label><br/>
+                            <input type="text" value={viewProduct.name} readOnly/><br/>
 
-                <button onClick={this.closePopUp}>Close</button>
-            </form>
+                            <label for="img">Gambar produk:</label><br/>
+                            <img src={viewProduct.image} alt="image"/><br/>
+
+                            <label for="sku">Sku produk:</label><br/>
+                            <input type="text" value={viewProduct.sku} readOnly/><br/>
+                        </div>
+                        
+                        <div>
+                            <label for="harga">Harga produk:</label><br/>
+                            <input type="number" value={viewProduct.price} readOnly/><br/>
+
+                            <label for="quantity">Kuantitas produk:</label><br/>
+                            <input type="number" value={viewProduct.quantity} readOnly/><br/>
+
+                            <label for="marketplace">Marketplace produk:</label><br/>
+                            <input type="text" value={viewProduct.marketplace} readOnly/><br/> 
+                        </div>
+                    </div>
+                    <button onClick={this.closePopUp}>X</button>  
+                </form>
+            </div>  
         )
     }
 
@@ -106,10 +118,10 @@ class HomePage extends React.Component {
             <div className='Home'>
                 <Navbar/>
                 <NewProduct Addproduct = {this.AddProducthandler}/>
-                <ProductList product={this.state.product} onDelete={this.onDeletehandler} onView={this.ViewHandler}/>
                 {
                     this.ViewPopUp()
                 }
+                <ProductList product={this.state.product} onDelete={this.onDeletehandler} onView={this.ViewHandler}/>
             </div>
         )
     }
