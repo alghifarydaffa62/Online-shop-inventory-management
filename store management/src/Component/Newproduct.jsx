@@ -70,6 +70,11 @@ class NewProduct extends React.Component {
         })
     }
 
+    onSubmithandler(event) {
+        event.preventDefault()
+        this.props.Addproduct(this.state)
+    }
+
     render() {
         return(
             <form className="Newproduct">
@@ -80,7 +85,7 @@ class NewProduct extends React.Component {
                         <label for="name">Nama produk:</label><br/>
                         <input placeholder="Nama produk" type="text" value={this.state.name} onChange={this.onNamechange}/><br/>
                         <label for="img">Gambar produk:</label><br/>
-                        <input placeholder="Gambar produk" type="text" value={this.state.img} onChange={this.onImgchange}/><br/>
+                        <input placeholder="Gambar produk" type="file" value={this.state.img} onChange={this.onImgchange}/><br/>
                         <label for="sku">Sku produk:</label><br/>
                         <input placeholder="Sku produk" type="text" value={this.state.sku} onChange={this.onSkuchange}/><br/>
                     </div>

@@ -12,14 +12,41 @@ class HomePage extends React.Component {
         this.state = {
             product: product()
         }
+
+        this.onDeletehandler = this.onDeletehandler.bind(this)
+        this.AddProducthandler = this.AddProducthandler.bind(this)
+    }
+
+    onDeletehandler(id) {
+        const product = this.state.product.filter(produks => produks.id !== id)
+        this.setState({product})
+    }
+
+    AddProducthandler({name, image, sku, price, quantity, marketplace}) {
+        this.setState((prevState) => {
+            return {
+                product: [
+                    ...prevState.product,
+                    {
+                        id: + new Date(),
+                        name,
+                        image,
+                        sku,
+                        price,
+                        quantity,
+                        marketplace
+                    }
+                ]
+            }
+        })
     }
 
     render() {
         return(
             <div className='Home'>
                 <Navbar/>
-                <NewProduct/>
-                <ProductList product={this.state.product}/>
+                <NewProduct Addproduct = {this.AddProducthandler}/>
+                <ProductList product={this.state.product} onDelete={this.onDeletehandler}/>
             </div>
         )
     }
