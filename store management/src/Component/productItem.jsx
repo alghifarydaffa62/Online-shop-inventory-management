@@ -2,7 +2,7 @@ import React from "react"
 import ProductAction from "./ProductAction"
 import '../style/style.css'
 
-function ProductItem({id, name, image, sku, harga, kuantitas, market, onDelete}) {
+function ProductItem({id, name, image, sku, harga, kuantitas, market, onDelete, onView}) {
     return(
         <tr>
             <td>{id}</td>
@@ -14,7 +14,7 @@ function ProductItem({id, name, image, sku, harga, kuantitas, market, onDelete})
             <td>Rp. {harga}</td>
             <td>{kuantitas}</td>
             <td>{market}</td>
-            <td><ProductAction id={id} onDelete={onDelete}/></td>
+            <td><ProductAction id={id} onDelete={onDelete} onView={onView}/></td>
         </tr>
     )
 }

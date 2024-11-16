@@ -2,7 +2,7 @@ import React from "react"
 import ProductItem from "./productItem"
 import '../style/style.css'
 
-function ProductList({product, onDelete}) {
+function ProductList({product, onDelete, onView}) {
     return(
         <div className="list-produk">
             <h1>DATA PRODUK</h1>
@@ -32,6 +32,7 @@ function ProductList({product, onDelete}) {
                                 kuantitas={produk.quantity}
                                 market={produk.marketplace}
                                 onDelete = {onDelete}
+                                onView={onView}
                             />
                         ))
                     }

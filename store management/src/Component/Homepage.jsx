@@ -10,21 +10,32 @@ class HomePage extends React.Component {
         super(props)
 
         this.state = {
-            product: product()
+            product: product(),
+            viewProduct: null
         }
 
         this.onDeletehandler = this.onDeletehandler.bind(this)
         this.AddProducthandler = this.AddProducthandler.bind(this)
+        this.ViewHandler = this.ViewHandler.bind(this)
     }
 
     onDeletehandler(id) {
-        const product = this.state.product.filter(produks => produks.id !== id)
-        this.setState({product})
+        const index = this.state.product.findIndex(p => p.id === id);
+    
+        if (index > -1) {
+            this.state.product.splice(index, 1);
+            const updatedProducts = [...this.state.product];
+            localStorage.setItem('products', JSON.stringify(updatedProducts));
+            
+            this.setState({
+            product: updatedProducts
+            });
+        }
     }
 
     AddProducthandler({name, image, sku, price, quantity, marketplace}) {
         const newProduct = {
-            id: +new Date(),
+            id: + new Date(),
             name,
             image,
             sku,
@@ -35,8 +46,6 @@ class HomePage extends React.Component {
     
         this.setState((prevState) => {
             const updatedProducts = [...prevState.product, newProduct];
-    
-            // Simpan ke Local Storage
             localStorage.setItem("products", JSON.stringify(updatedProducts));
     
             return { product: updatedProducts };
@@ -50,12 +59,57 @@ class HomePage extends React.Component {
         }
     }
 
+    ViewHandler(id) {
+        const selectedproduct = this.state.product.find(item => item.id == id)
+
+        if(selectedproduct) {
+            this.setState({viewProduct: selectedproduct})
+        }
+    }
+
+    closePopUp = (event) => {
+        event.preventDefault()
+        this.setState({viewProduct: null})
+    }
+
+    ViewPopUp() {
+        const {viewProduct} = this.state
+        if (!viewProduct) return null
+    
+        return (
+            <form className="view-popup">
+                <label for="name">Nama produk:</label><br/>
+                <input type='text' value={viewProduct.name} readOnly/><br/>
+                
+                <label for="img">Gambar produk:</label><br/>        
+                <img src={viewProduct.image} alt='produk'/><br/>
+                
+                <label for="sku">Sku produk:</label><br/>        
+                <input type='text' value={viewProduct.sku} readOnly/><br/>
+        
+                <label for="harga">Harga produk:</label><br/>
+                <input type='text' value={viewProduct.price} readOnly/><br/>
+                        
+                <label for="quantity">Kuantitas produk:</label><br/>
+                <input type='text' value={viewProduct.quantity} readOnly/><br/>
+                        
+                <label for="marketplace">Marketplace produk:</label><br/>
+                <input type='text' value={viewProduct.marketplace} readOnly/><br/>
+
+                <button onClick={this.closePopUp}>Close</button>
+            </form>
+        )
+    }
+
     render() {
         return(
             <div className='Home'>
                 <Navbar/>
                 <NewProduct Addproduct = {this.AddProducthandler}/>
-                <ProductList product={this.state.product} onDelete={this.onDeletehandler}/>
+                <ProductList product={this.state.product} onDelete={this.onDeletehandler} onView={this.ViewHandler}/>
+                {
+                    this.ViewPopUp()
+                }
             </div>
         )
     }
