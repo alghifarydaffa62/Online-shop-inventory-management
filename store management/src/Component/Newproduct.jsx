@@ -20,6 +20,7 @@ class NewProduct extends React.Component {
         this.onPricechange = this.onPricechange.bind(this)
         this.onQuantitychange = this.onQuantitychange.bind(this)
         this.onMarketchange = this.onMarketchange.bind(this)
+        this.onSubmithandler = this.onSubmithandler.bind(this)
     }
 
     onNamechange(event) {
@@ -31,11 +32,14 @@ class NewProduct extends React.Component {
     }
 
     onImgchange(event) {
-        this.setState(() => {
-            return {
-                img: event.target.value
-            }
-        })
+        const file = event.target.files[0]
+        if (file) {
+            const reader = new FileReader()
+            reader.onload = () => {
+                this.setState({ image: reader.result })
+            };
+            reader.readAsDataURL(file)
+        }
     }
 
     onSkuchange(event) {
@@ -77,7 +81,7 @@ class NewProduct extends React.Component {
 
     render() {
         return(
-            <form className="Newproduct">
+            <form className="Newproduct" onSubmit={this.onSubmithandler}> 
                 <h2>Tambahkan Produk Baru</h2>
 
                 <div className="product-input">
@@ -85,7 +89,7 @@ class NewProduct extends React.Component {
                         <label for="name">Nama produk:</label><br/>
                         <input placeholder="Nama produk" type="text" value={this.state.name} onChange={this.onNamechange}/><br/>
                         <label for="img">Gambar produk:</label><br/>
-                        <input placeholder="Gambar produk" type="file" value={this.state.img} onChange={this.onImgchange}/><br/>
+                        <input placeholder="Gambar produk" type="file" value={this.state.img} onChange={this.onImgchange} accept="image/"/><br/>
                         <label for="sku">Sku produk:</label><br/>
                         <input placeholder="Sku produk" type="text" value={this.state.sku} onChange={this.onSkuchange}/><br/>
                     </div>

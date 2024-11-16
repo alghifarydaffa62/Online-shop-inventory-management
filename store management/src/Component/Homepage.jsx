@@ -23,22 +23,31 @@ class HomePage extends React.Component {
     }
 
     AddProducthandler({name, image, sku, price, quantity, marketplace}) {
+        const newProduct = {
+            id: +new Date(),
+            name,
+            image,
+            sku,
+            price,
+            quantity,
+            marketplace,
+        };
+    
         this.setState((prevState) => {
-            return {
-                product: [
-                    ...prevState.product,
-                    {
-                        id: + new Date(),
-                        name,
-                        image,
-                        sku,
-                        price,
-                        quantity,
-                        marketplace
-                    }
-                ]
-            }
+            const updatedProducts = [...prevState.product, newProduct];
+    
+            // Simpan ke Local Storage
+            localStorage.setItem("products", JSON.stringify(updatedProducts));
+    
+            return { product: updatedProducts };
         })
+    }
+    
+    componentDidMount() {
+        const savedProducts = JSON.parse(localStorage.getItem("products"));
+        if (savedProducts) {
+            this.setState({ product: savedProducts });
+        }
     }
 
     render() {
