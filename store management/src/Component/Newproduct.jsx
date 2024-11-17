@@ -86,20 +86,20 @@ class NewProduct extends React.Component {
 
                 <div className="product-input">
                     <div>
-                        <label for="name">Nama produk:</label><br/>
+                        <label >Nama produk:</label><br/>
                         <input placeholder="Nama produk" type="text" value={this.state.name} onChange={this.onNamechange}/><br/>
-                        <label for="img">Gambar produk:</label><br/>
+                        <label >Gambar produk:</label><br/>
                         <input placeholder="Gambar produk" type="file" value={this.state.img} onChange={this.onImgchange} accept="image/"/><br/>
-                        <label for="sku">Sku produk:</label><br/>
+                        <label >Sku produk:</label><br/>
                         <input placeholder="Sku produk" type="text" value={this.state.sku} onChange={this.onSkuchange}/><br/>
                     </div>
                     
                     <div>
-                        <label for="harga">Harga produk:</label><br/>
+                        <label >Harga produk:</label><br/>
                         <input placeholder="Harga produk" type="number" value={this.state.price} onChange={this.onPricechange}/><br/>
-                        <label for="quantity">Kuantitas produk:</label><br/>
+                        <label >Kuantitas produk:</label><br/>
                         <input placeholder="Kuantitas produk" type="number" value={this.state.quantity} onChange={this.onQuantitychange}/><br/>
-                        <label for="marketplace">Marketplace produk:</label><br/>
+                        <label >Marketplace produk:</label><br/>
                         <input placeholder="Marketplace produk" type="text" value={this.state.marketplace} onChange={this.onMarketchange}/><br/> 
                     </div>
                 </div>
