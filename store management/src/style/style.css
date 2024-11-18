@@ -202,3 +202,13 @@ img {
     font-size: 1rem;
     cursor: pointer;
 }
+
+.popup-button {
+    display: flex;
+    gap: 1rem;
+}
+
+.popup-button button:nth-child(2) {
+    background-color: red;
+    color: white;
+}

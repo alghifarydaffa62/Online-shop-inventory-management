@@ -9,7 +9,7 @@ import '../style/style.css'
 
 class HomePage extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
             product: product(),
@@ -17,17 +17,25 @@ class HomePage extends React.Component {
             editProduct: null,
         };
 
-        this.onDeletehandler = this.onDeletehandler.bind(this);
-        this.AddProducthandler = this.AddProducthandler.bind(this);
-        this.ViewHandler = this.ViewHandler.bind(this);
-        this.EditHandler = this.EditHandler.bind(this);
-        this.saveEditHandler = this.saveEditHandler.bind(this);
+        this.onDeletehandler = this.onDeletehandler.bind(this)
+        this.AddProducthandler = this.AddProducthandler.bind(this)
+        this.ViewHandler = this.ViewHandler.bind(this)
+        this.EditHandler = this.EditHandler.bind(this)
+        this.saveEditHandler = this.saveEditHandler.bind(this)
     }
 
     onDeletehandler(id) {
-        const updatedProducts = this.state.product.filter(p => p.id !== id);
-        localStorage.setItem('products', JSON.stringify(updatedProducts));
-        this.setState({ product: updatedProducts });
+        const confirmDelete = window.confirm("Apakah Anda yakin ingin menghapus produk ini?")
+        if (!confirmDelete) {
+            return
+        }
+
+        const updatedProducts = this.state.product.filter(produks => produks.id !== id)
+    
+        const allProducts = JSON.parse(localStorage.getItem("products")) || []
+        const remainingProducts = allProducts.filter(prod => prod.id !== id)
+        localStorage.setItem("products", JSON.stringify(remainingProducts))
+        this.setState({ product: updatedProducts })
     }
 
     AddProducthandler({ name, image, sku, price, quantity, marketplace }) {

@@ -48,7 +48,7 @@ function EditPopup({ product, onClose, onSave }) {
                         <label>Nama produk:</label><br />
                         <input type="text" name="name" value={formData.name} onChange={handleChange} required /><br />
                         <label>Gambar produk:</label><br />
-                        <input type="text" name="image" value={formData.image} onChange={handleChange} required /><br />
+                        <img src={formData.image} alt={formData.name}/><br />
                         <label>Sku produk:</label><br />
                         <input type="text" name="sku" value={formData.sku} onChange={handleChange} required /><br />
                     </div>
@@ -61,8 +61,10 @@ function EditPopup({ product, onClose, onSave }) {
                         <input type="text" name="marketplace" value={formData.marketplace} onChange={handleChange} required /><br />
                     </div>
                 </div>
-                <button type="submit">Simpan</button>
-                <button type="button" onClick={onClose}>Batal</button>
+                <div className="popup-button">
+                    <button type="submit">Simpan</button>
+                    <button type="button" onClick={onClose}>Batal</button>
+                </div>
             </form>
         </div>
     );

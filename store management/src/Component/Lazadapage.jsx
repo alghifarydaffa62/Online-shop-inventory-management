@@ -23,8 +23,12 @@ class Lazadapage extends React.Component {
     }
 
     onDeletehandler(id) {
+        const confirmDelete = window.confirm("Apakah Anda yakin ingin menghapus produk ini?")
+        if (!confirmDelete) {
+            return
+        }
+        
         const updatedProducts = this.state.product.filter(produks => produks.id !== id);
-
         const allProducts = JSON.parse(localStorage.getItem("products")) || [];
         const remainingProducts = allProducts.filter(prod => prod.id !== id);
 
