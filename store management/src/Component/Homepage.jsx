@@ -14,14 +14,14 @@ class HomePage extends React.Component {
         this.state = {
             product: product(),
             viewProduct: null,
-            editProduct: null, // New state for edit product
+            editProduct: null,
         };
 
         this.onDeletehandler = this.onDeletehandler.bind(this);
         this.AddProducthandler = this.AddProducthandler.bind(this);
         this.ViewHandler = this.ViewHandler.bind(this);
-        this.EditHandler = this.EditHandler.bind(this); // New handler
-        this.saveEditHandler = this.saveEditHandler.bind(this); // New save handler
+        this.EditHandler = this.EditHandler.bind(this);
+        this.saveEditHandler = this.saveEditHandler.bind(this);
     }
 
     onDeletehandler(id) {
@@ -30,9 +30,9 @@ class HomePage extends React.Component {
         this.setState({ product: updatedProducts });
     }
 
-    AddProducthandler({name, image, sku, price, quantity, marketplace}) {
+    AddProducthandler({ name, image, sku, price, quantity, marketplace }) {
         const newProduct = {
-            id: + new Date(),
+            id: +new Date(),
             name,
             image,
             sku,
@@ -40,66 +40,75 @@ class HomePage extends React.Component {
             quantity,
             marketplace,
         };
-    
-        this.setState((prevState) => {
+
+        this.setState(prevState => {
             const updatedProducts = [...prevState.product, newProduct];
-            localStorage.setItem("products", JSON.stringify(updatedProducts));
-    
+            localStorage.setItem('products', JSON.stringify(updatedProducts));
             return { product: updatedProducts };
-        })
+        });
     }
-    
+
     componentDidMount() {
-        const savedProducts = JSON.parse(localStorage.getItem("products"));
+        const savedProducts = JSON.parse(localStorage.getItem('products'));
         if (savedProducts) {
             this.setState({ product: savedProducts });
         }
     }
 
     ViewHandler(id) {
-        const selectedproduct = this.state.product.find(item => item.id == id)
-
-        if(selectedproduct) {
-            this.setState({viewProduct: selectedproduct}, () => {
-                document.body.classList.add("no-scroll")
-            })
+        const selectedproduct = this.state.product.find(item => item.id === id);
+        if (selectedproduct) {
+            this.setState({ viewProduct: selectedproduct }, () => {
+                document.body.classList.add('no-scroll');
+            });
         }
     }
 
     closePopUp = (event) => {
-        event.preventDefault()
-        this.setState({viewProduct: null}, () => {
-            document.body.classList.remove("no-scroll")
-        })
+        event.preventDefault();
+        this.setState({ viewProduct: null, editProduct: null }, () => {
+            document.body.classList.remove('no-scroll');
+        });
     }
 
     EditHandler(id) {
         const selectedProduct = this.state.product.find(item => item.id === id);
         if (selectedProduct) {
             this.setState({ editProduct: selectedProduct }, () => {
-                document.body.classList.add("no-scroll");
+                document.body.classList.add('no-scroll');
             });
         }
     }
 
     saveEditHandler(updatedProduct) {
         const updatedProducts = this.state.product.map(prod =>
-            prod.id === updatedProducts.id ? updatedProducts : prod
+            prod.id === updatedProduct.id ? updatedProduct : prod
         );
-        localStorage.setItem('products', JSON.stringify)
+        localStorage.setItem('products', JSON.stringify(updatedProducts));
+        this.setState({ product: updatedProducts, editProduct: null }, () => {
+            document.body.classList.remove('no-scroll');
+        });
     }
-   
 
     render() {
-        return(
+        return (
             <div className='Home'>
-                <Navbar/>
-                <NewProduct Addproduct = {this.AddProducthandler}/>
+                <Navbar />
+                <NewProduct Addproduct={this.AddProducthandler} />
                 <Viewpopup product={this.state.viewProduct} onClose={this.closePopUp} />
-                <EditPopup product={this.state.editProduct} onSave={this.saveEditHandler} onClose={this.closePopUp}/>
-                <ProductList product={this.state.product} onDelete={this.onDeletehandler} onView={this.ViewHandler} onEdit={this.EditHandler}/>
+                <EditPopup
+                    product={this.state.editProduct}
+                    onSave={this.saveEditHandler}
+                    onClose={this.closePopUp}
+                />
+                <ProductList
+                    product={this.state.product}
+                    onDelete={this.onDeletehandler}
+                    onView={this.ViewHandler}
+                    onEdit={this.EditHandler}
+                />
             </div>
-        )
+        );
     }
 }
 

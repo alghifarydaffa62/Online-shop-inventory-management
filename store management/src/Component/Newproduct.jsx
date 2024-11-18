@@ -77,6 +77,14 @@ class NewProduct extends React.Component {
     onSubmithandler(event) {
         event.preventDefault()
         this.props.Addproduct(this.state)
+        this.setState({
+            name: '',
+            image: '',
+            sku: '',
+            price: '',
+            quantity: '',
+            marketplace: ''
+        })
     }
 
     render() {

@@ -1,91 +1,116 @@
 import React from "react"
 import '../style/style.css'
 import Navbar from "./Navbar"
+import Viewpopup from "./Viewpopup"
+import EditPopup from "./Editpopup"
 import ProductList from "./productList"
 
 class Lazadapage extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
-            product: JSON.parse(localStorage.getItem("products"))?.filter((produk) => produk.marketplace === "Lazada") || [],
-            viewProduct: null
-        }
+            product: JSON.parse(localStorage.getItem("products"))?.filter(prod => prod.marketplace === "Lazada") || [],
+            viewProduct: null,
+            editProduct: null,
+        };
 
-        this.onDeletehandler = this.onDeletehandler.bind(this)
-        this.ViewHandler = this.ViewHandler.bind(this)
+        this.onDeletehandler = this.onDeletehandler.bind(this);
+        this.ViewHandler = this.ViewHandler.bind(this);
+        this.AddProducthandler = this.AddProducthandler.bind(this);
+        this.EditHandler = this.EditHandler.bind(this);
+        this.saveEditHandler = this.saveEditHandler.bind(this);
     }
 
     onDeletehandler(id) {
-        const product = this.state.product.filter(produks => produks.id !== id)
-        this.setState({product})
+        const updatedProducts = this.state.product.filter(produks => produks.id !== id);
+
+        const allProducts = JSON.parse(localStorage.getItem("products")) || [];
+        const remainingProducts = allProducts.filter(prod => prod.id !== id);
+
+        localStorage.setItem("products", JSON.stringify(remainingProducts));
+        this.setState({ product: updatedProducts });
+    }
+
+    AddProducthandler({ name, image, sku, price, quantity, marketplace }) {
+        const newProduct = { id: +new Date(), name, image, sku, price, quantity, marketplace };
+
+        this.setState(prevState => {
+            const allProducts = JSON.parse(localStorage.getItem("products")) || [];
+            const updatedProducts = [...allProducts, newProduct];
+
+            localStorage.setItem('products', JSON.stringify(updatedProducts));
+
+            const lazadaProducts = updatedProducts.filter(prod => prod.marketplace === "Lazada");
+            return { product: lazadaProducts };
+        });
+    }
+
+    componentDidMount() {
+        const savedProducts = JSON.parse(localStorage.getItem("products"));
+        if (savedProducts) {
+            const lazadaProducts = savedProducts.filter(prod => prod.marketplace === "Lazada");
+            this.setState({ product: lazadaProducts });
+        }
     }
 
     ViewHandler(id) {
-        const selectedproduct = this.state.product.find(item => item.id == id)
-
-        if(selectedproduct) {
-            this.setState({viewProduct: selectedproduct}, () => {
-                document.body.classList.add("no-scroll")
-            })
+        const selectedproduct = this.state.product.find(item => item.id === id);
+        if (selectedproduct) {
+            this.setState({ viewProduct: selectedproduct }, () => {
+                document.body.classList.add('no-scroll');
+            });
         }
     }
 
     closePopUp = (event) => {
-        event.preventDefault()
-        this.setState({viewProduct: null}, () => {
-            document.body.classList.remove("no-scroll")
-        })
+        event.preventDefault();
+        this.setState({ viewProduct: null, editProduct: null }, () => {
+            document.body.classList.remove('no-scroll');
+        });
     }
 
-    ViewPopUp() {
-        const {viewProduct} = this.state
-        if (!viewProduct) return null
-    
-        return (
-            <div className='overlay'>
-                <form className="view-popup"> 
-                    <h2>Tentang Produk</h2>
-                    <div className="popup-input">
-                        <div>
-                            <label for="name">Nama produk:</label><br/>
-                            <input type="text" value={viewProduct.name} readOnly/><br/>
+    EditHandler(id) {
+        const selectedProduct = this.state.product.find(item => item.id === id);
+        if (selectedProduct) {
+            this.setState({ editProduct: selectedProduct }, () => {
+                document.body.classList.add('no-scroll');
+            });
+        }
+    }
 
-                            <label for="img">Gambar produk:</label><br/>
-                            <img src={viewProduct.image} alt="image"/><br/>
+    saveEditHandler(updatedProduct) {
+        const allProducts = JSON.parse(localStorage.getItem("products")) || [];
+        const updatedProducts = allProducts.map(prod =>
+            prod.id === updatedProduct.id ? updatedProduct : prod
+        );
 
-                            <label for="sku">Sku produk:</label><br/>
-                            <input type="text" value={viewProduct.sku} readOnly/><br/>
-                        </div>
-                        
-                        <div>
-                            <label for="harga">Harga produk:</label><br/>
-                            <input type="number" value={viewProduct.price} readOnly/><br/>
+        localStorage.setItem('products', JSON.stringify(updatedProducts));
 
-                            <label for="quantity">Kuantitas produk:</label><br/>
-                            <input type="number" value={viewProduct.quantity} readOnly/><br/>
-
-                            <label for="marketplace">Marketplace produk:</label><br/>
-                            <input type="text" value={viewProduct.marketplace} readOnly/><br/> 
-                        </div>
-                    </div>
-                    <button onClick={this.closePopUp}>X</button>  
-                </form>
-            </div>
-           
-        )
+        const lazadaProducts = updatedProducts.filter(prod => prod.marketplace === "Lazada");
+        this.setState({ product: lazadaProducts, editProduct: null }, () => {
+            document.body.classList.remove('no-scroll');
+        });
     }
 
     render() {
-        return(
-        <div className="lazada">
-            <Navbar/>
-            {
-                this.ViewPopUp()
-            }
-            <ProductList product={this.state.product} onDelete={this.onDeletehandler} onView={this.ViewHandler}/>
-        </div>
-        )
+        return (
+            <div className="lazada">
+                <Navbar />
+                <Viewpopup product={this.state.viewProduct} onClose={this.closePopUp} />
+                <EditPopup
+                    product={this.state.editProduct}
+                    onSave={this.saveEditHandler}
+                    onClose={this.closePopUp}
+                />
+                <ProductList
+                    product={this.state.product}
+                    onDelete={this.onDeletehandler}
+                    onView={this.ViewHandler}
+                    onEdit={this.EditHandler}
+                />
+            </div>
+        );
     }
 }
 
